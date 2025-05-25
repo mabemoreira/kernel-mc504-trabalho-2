@@ -388,6 +388,9 @@ COND_SYSCALL(setresuid16);
 COND_SYSCALL(setreuid16);
 COND_SYSCALL(setuid16);
 
+COND_SYSCALL(get_mensagem_original);
+COND_SYSCALL(set_mensagem_cifrada);
+
 /* restartable sequence */
 COND_SYSCALL(rseq);
 

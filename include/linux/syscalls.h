@@ -994,6 +994,13 @@ asmlinkage long sys_lsm_list_modules(u64 __user *ids, u32 __user *size, u32 flag
  */
 
 /* x86 */
+
+asmlinkage long sys_get_mensagem_original(unsigned char __user *  mensagem,  unsigned char __user * chave,  
+	unsigned char __user * cifrada, unsigned long tamanho_cifrada,  unsigned long tamanho_chave)
+
+asmlinkage long sys_set_mensagem_cifrada(unsigned char __user *  mensagem,  unsigned char __user * chave,  
+	unsigned char __user * cifrada, unsigned long tamanho_cifrada,  unsigned long tamanho_chave)
+
 asmlinkage long sys_ioperm(unsigned long from, unsigned long num, int on);
 
 asmlinkage long sys_uretprobe(void);

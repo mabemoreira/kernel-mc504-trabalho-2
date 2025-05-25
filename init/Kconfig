@@ -2110,3 +2110,13 @@ config ARCH_HAS_SYNC_CORE_BEFORE_USERMODE
 # <asm/syscall_wrapper.h>.
 config ARCH_HAS_SYSCALL_WRAPPER
 	def_bool n
+
+config GET_MENSAGEM_ORIGINAL
+	bool
+	help
+	  Chama a syscall get_mensagem_original() definida dentro do escopo do Trabalho 2 de MC504.
+
+config SET_MENSAGEM_CIFRADA
+	bool
+	help
+	  Chama a syscall get_mensagem_cifrada() definida dentro do escopo do Trabalho 2 de MC504.

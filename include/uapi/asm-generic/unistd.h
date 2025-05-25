@@ -852,6 +852,11 @@ __SYSCALL(__NR_removexattrat, sys_removexattrat)
 #define __NR_open_tree_attr 467
 __SYSCALL(__NR_open_tree_attr, sys_open_tree_attr)
 
+#define __NR_get_mensagem_original 468
+__SYSCALL(__NR_get_mensagem_original, sys_get_mensagem_original)
+#define __NR_set_mensagem_cifrada 469
+__SYSCALL(__NR_set_mensagem_cifrada, sys_set_mensagem_cifrada)
+
 #undef __NR_syscalls
 #define __NR_syscalls 468
 
