@@ -6,9 +6,12 @@
 #include <linux/gfp.h>
 #include <linux/types.h>
 
-SYSCALL_DEFINE5(get_mensagem_original, unsigned char __user *, mensagem,
-		unsigned char __user *, chave, unsigned char __user *, cifrada,
-		unsigned long, tamanho_cifrada, unsigned long, tamanho_chave)
+SYSCALL_DEFINE5(get_mensagem_original, 
+		char __user *, retorno, 
+		char __user *, mensagem_cifrada,
+		const char __user *, chave,
+		size_t, tamanho_cifrada,
+		size_t, tamanho_chave)
 {
 	if (tamanho_chave < tamanho_cifrada) {
 		printk(KERN_ERR "Erro: chave menor que a mensagem.\n");
@@ -19,7 +22,7 @@ SYSCALL_DEFINE5(get_mensagem_original, unsigned char __user *, mensagem,
 	kcifrada = kmalloc(tamanho_cifrada, GFP_KERNEL);
 	if (!kcifrada)
 		return -ENOMEM;
-	if (copy_from_user(kcifrada, cifrada, tamanho_cifrada)) {
+	if (copy_from_user(kcifrada, mensagem_cifrada, tamanho_cifrada)) {
 		kfree(kcifrada);
 		return -EFAULT;
 	}
@@ -36,28 +39,30 @@ SYSCALL_DEFINE5(get_mensagem_original, unsigned char __user *, mensagem,
 		return -EFAULT;
 	}
 
-	unsigned char *kmensagem;
-	kmensagem = kmalloc(tamanho_cifrada, GFP_KERNEL);
-	if (!kmensagem) {
+	unsigned char *kdecifrada;
+	kdecifrada = kmalloc(tamanho_cifrada, GFP_KERNEL);
+	if (!kdecifrada) {
 		kfree(kcifrada);
 		kfree(kchave);
 		return -ENOMEM;
 	}
 
-	for (unsigned long i = 0; i < tamanho_cifrada; i++) {
-		kmensagem[i] = kcifrada[i] ^ kchave[i];
+	size_t i;
+	for (i = 0; i < tamanho_cifrada; i++) {
+		kdecifrada[i] = kcifrada[i] ^ kchave[i];
 	}
+	kdecifrada[i] = '\0';
 
-	if (copy_to_user(mensagem, kmensagem, tamanho_cifrada)) {
+	if (copy_to_user(retorno, kdecifrada, tamanho_cifrada)) {
 		kfree(kcifrada);
 		kfree(kchave);
-		kfree(kmensagem);
+		kfree(kdecifrada);
 		return -EFAULT;
 	}
 
 	kfree(kcifrada);
 	kfree(kchave);
-	kfree(kmensagem);
+	kfree(kdecifrada);
 
 	return 0;
 }

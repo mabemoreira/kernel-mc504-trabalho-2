@@ -858,7 +858,7 @@ __SYSCALL(__NR_get_mensagem_original, sys_get_mensagem_original)
 __SYSCALL(__NR_set_mensagem_cifrada, sys_set_mensagem_cifrada)
 
 #undef __NR_syscalls
-#define __NR_syscalls 468
+#define __NR_syscalls 470
 
 /*
  * 32 bit systems traditionally used different

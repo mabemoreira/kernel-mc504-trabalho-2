@@ -6,9 +6,12 @@
 #include <linux/gfp.h>
 #include <linux/types.h>
 
-SYSCALL_DEFINE5(set_mensagem_cifrada, unsigned char __user *, mensagem,
-        unsigned char __user *, chave, unsigned char __user *, cifrada,
-        unsigned long, tamanho_cifrada, unsigned long, tamanho_chave)
+SYSCALL_DEFINE5(set_mensagem_cifrada, 
+        const char __user *, mensagem,
+        const char __user *, chave, 
+        char __user *, retorno,
+        size_t, tamanho_cifrada, 
+        size_t, tamanho_chave)
 {
 
     if (tamanho_chave < tamanho_cifrada) {
@@ -46,11 +49,11 @@ SYSCALL_DEFINE5(set_mensagem_cifrada, unsigned char __user *, mensagem,
     }
 
     // Não precisa copiar de cifrada, apenas gerar o resultado
-    for (unsigned long i = 0; i < tamanho_cifrada; i++) {
+    for (size_t i = 0; i < tamanho_cifrada; i++) {
         kcifrada[i] = kmensagem[i] ^ kchave[i];
     }
 
-    if (copy_to_user(cifrada, kcifrada, tamanho_cifrada)) {
+    if (copy_to_user(retorno, kcifrada, tamanho_cifrada)) {
         kfree(kmensagem);
         kfree(kchave);
         kfree(kcifrada);
