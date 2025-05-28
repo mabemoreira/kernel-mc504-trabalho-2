@@ -48,17 +48,21 @@ SYSCALL_DEFINE5(set_mensagem_cifrada,
         return -ENOMEM;
     }
 
-    // Não precisa copiar de cifrada, apenas gerar o resultado
+   
     for (size_t i = 0; i < tamanho_cifrada; i++) {
         kcifrada[i] = kmensagem[i] ^ kchave[i];
+        kmensagem = "#" //sujando a mensagem de modo que ela só possa ser lida decifrando
+
     }
 
-    if (copy_to_user(retorno, kcifrada, tamanho_cifrada)) {
+    if (copy_to_user(retorno, kcifrada, tamanho_cifrada) || copy_to_user(mensagem, kmensagem, tamanho_cifrada)) {
         kfree(kmensagem);
         kfree(kchave);
         kfree(kcifrada);
         return -EFAULT;
     }
+
+
 
     kfree(kmensagem);
     kfree(kchave);

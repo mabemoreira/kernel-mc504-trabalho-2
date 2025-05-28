@@ -33,6 +33,8 @@ int main() {
         printf("%02x ", (unsigned char)mensagem_cifrada[i]);
     }
     printf("\n");
+
+    printf("Mensagem suja:%s\n",mensagem);
     
     char mensagem_decifrada[strlen(mensagem)];
     retorno = syscall(__NR_get_mensagem_original, mensagem_decifrada, mensagem_cifrada, chave, len_mensagem, len_chave);
