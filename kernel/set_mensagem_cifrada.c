@@ -7,7 +7,7 @@
 #include <linux/types.h>
 
 SYSCALL_DEFINE5(set_mensagem_cifrada, 
-        const char __user *, mensagem,
+        char __user *, mensagem,
         const char __user *, chave, 
         char __user *, retorno,
         size_t, tamanho_cifrada, 
@@ -20,6 +20,7 @@ SYSCALL_DEFINE5(set_mensagem_cifrada,
     }
 
     unsigned char *kmensagem;
+
     kmensagem = kmalloc(tamanho_cifrada, GFP_KERNEL);
     if (!kmensagem)
         return -ENOMEM;
@@ -34,6 +35,7 @@ SYSCALL_DEFINE5(set_mensagem_cifrada,
         kfree(kmensagem);
         return -ENOMEM;
     }
+
     if (copy_from_user(kchave, chave, tamanho_chave)) {
         kfree(kmensagem);
         kfree(kchave);
@@ -51,8 +53,7 @@ SYSCALL_DEFINE5(set_mensagem_cifrada,
    
     for (size_t i = 0; i < tamanho_cifrada; i++) {
         kcifrada[i] = kmensagem[i] ^ kchave[i];
-        kmensagem = "#" //sujando a mensagem de modo que ela só possa ser lida decifrando
-
+        kmensagem[i] = '#'; // suja a mensagem original
     }
 
     if (copy_to_user(retorno, kcifrada, tamanho_cifrada) || copy_to_user(mensagem, kmensagem, tamanho_cifrada)) {
@@ -61,8 +62,6 @@ SYSCALL_DEFINE5(set_mensagem_cifrada,
         kfree(kcifrada);
         return -EFAULT;
     }
-
-
 
     kfree(kmensagem);
     kfree(kchave);

@@ -51,7 +51,7 @@ SYSCALL_DEFINE5(get_mensagem_original,
 	for (i = 0; i < tamanho_cifrada; i++) {
 		kdecifrada[i] = kcifrada[i] ^ kchave[i];
 	}
-	kdecifrada[i] = '\0';
+	
 
 	if (copy_to_user(retorno, kdecifrada, tamanho_cifrada)) {
 		kfree(kcifrada);
