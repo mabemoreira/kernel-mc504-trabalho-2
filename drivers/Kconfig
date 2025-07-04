@@ -249,4 +249,6 @@ source "drivers/dpll/Kconfig"
 
 source "drivers/lkcamp/Kconfig"
 
+source "drivers/trabalho3/Kconfig"
+
 endmenu
