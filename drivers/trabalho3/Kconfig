@@ -6,9 +6,10 @@ config CAESAR_DRIVER
       the Caesar cipher encryption and decryption algorithm.
 
       When you write text to the device, it is stored in a kernel buffer.
-      You can then use ioctl commands to encrypt or decrypt the text in the
-      buffer. Reading from the device will return the processed text.
-      The cipher key is also configurable via an ioctl command.
+      You can then use ioctl commands to encrypt the text, decrypt the text,
+      or set a new cipher key. Reading from the device will return the
+      processed text from the buffer. The driver also supports lseek to allow
+      reading the buffer multiple times within the same session.
 
       The default configuration is 'm': the module will be compiled
       and it will be available to be loaded at runtime.

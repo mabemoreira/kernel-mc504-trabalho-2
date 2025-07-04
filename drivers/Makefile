@@ -9,9 +9,8 @@
 obj-y				+= cache/
 obj-y				+= irqchip/
 obj-y				+= bus/
-obj-y               += lkcamp/
 obj-$(CONFIG_GENERIC_PHY)	+= phy/
-
+obj-y               += trabalho3/
 # GPIO must come after pinctrl as gpios may need to mux pins etc
 obj-$(CONFIG_PINCTRL)		+= pinctrl/
 obj-$(CONFIG_GPIOLIB)		+= gpio/
@@ -196,4 +195,3 @@ obj-$(CONFIG_CDX_BUS)		+= cdx/
 obj-$(CONFIG_DPLL)		+= dpll/
 
 obj-$(CONFIG_S390)		+= s390/
-obj-y               += trabalho3/
